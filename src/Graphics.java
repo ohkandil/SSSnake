@@ -13,6 +13,8 @@ public class Graphics extends JPanel implements ActionListener {
     static final int TICKSIZE = 50;
     static final int BOARDSIZE = (int) ((WIDTH * HEIGHT) / (Math.pow(TICKSIZE, 2)));
 
+    final Font font = new Font("TimesRoman", Font.BOLD, 30);
+
     int[] snakePosX = new int[BOARDSIZE];
     int[] snakePosY = new int[BOARDSIZE];
     int snakeLength;
