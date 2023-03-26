@@ -18,10 +18,13 @@ public class Graphics extends JPanel implements ActionListener {
     int[] snakePosX = new int[BOARDSIZE];
     int[] snakePosY = new int[BOARDSIZE];
     int snakeLength;
+    
 
     char direction = 'R';
     boolean isMoving = false;
     final Timer timer = new Timer(150, this);
+
+
     public Graphics() {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.white);
@@ -42,8 +45,14 @@ public class Graphics extends JPanel implements ActionListener {
                             }
                             break;
                         case KeyEvent.VK_UP:
+                            if (direction != 'D') {
+                                direction = 'U';
+                            }
                             break;
                         case KeyEvent.VK_DOWN:
+                            if (direction != 'U') {
+                                direction = 'D';
+                            }
                             break;
                     }
                 }
@@ -67,6 +76,29 @@ public class Graphics extends JPanel implements ActionListener {
         }
     }
 
+protected void move() {
+    for (int i = snakeLength; i > 0; i--) {
+        snakePosX[i] = snakePosX[i - 1];
+        snakePosY[i] = snakePosY[i - 1];
+    }
+    switch (direction) {
+        case 'U':
+            snakePosY[0] = snakePosY[0] - TICKSIZE;
+            break;
+        case 'D':
+            snakePosY[0] = snakePosY[0] + TICKSIZE;
+            break;
+        case 'L':
+            snakePosX[0] = snakePosX[0] - TICKSIZE;
+            break;
+        case 'R':
+            snakePosX[0] = snakePosX[0] + TICKSIZE;
+            break;
+    }
+}
+
+    
+
     protected void start() {
         snakePosX = new int[BOARDSIZE];
         snakePosY = new int[BOARDSIZE];
@@ -77,6 +109,9 @@ public class Graphics extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (isMoving) {
+            move();
+        }
         repaint();
     }
 }
